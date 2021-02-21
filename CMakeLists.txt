@@ -14,8 +14,6 @@ message(STATUS "${PROJECT_NAME} ${PROJECT_VERSION}")
 include(CTest)
 include(GNUInstallDirs)
 
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
-
 # --- user options
 
 include(cmake/options.cmake)
