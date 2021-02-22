@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <array>
 #include "../cpp/INIReader.h"
 
 inline bool file_exists (const std::string& name) {
@@ -11,17 +13,20 @@ inline bool file_exists (const std::string& name) {
 
 int main()
 {
-  auto ini_filename = "../examples/test.ini";
+  std::array<std::string, 3> filenames { "../examples/test.ini", "../test.ini", "./test.ini" };
 
-  if ( !file_exists(ini_filename) ) {
-    // let try from current bin dirrector
-    ini_filename = "./test.ini";
+  std::string ini_filename = "";
+  for (int i = 0; i< filenames.size(); ++i)
+  {
+    ini_filename = filenames[i];
+    if ( file_exists(ini_filename) )
+      break;
   }
 
   INIReader reader(ini_filename);
 
   if (reader.ParseError() < 0) {
-    std::cout << "Can't load 'test.ini'\n";
+    std::cout << "Can't load '" << ini_filename << "'\n";
     return 1;
   }
   std::cout << "Config loaded from 'test.ini': version="
