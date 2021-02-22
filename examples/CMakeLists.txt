@@ -8,16 +8,8 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules)
 # see : https://cmake.org/cmake/help/latest/command/find_package.html#id3
 find_package(INIH CONFIG)
 
-if(INIH_FOUND)
-
-  # see if INIReader component is available
-  if(TARGET INIH::INIReader)
-    set(INIH_INIREADER_FOUND true)
-  else()
-    set(INIH_INIREADER_FOUND false)
-  endif()
-
-else()
+# if INIH is not found by the config mode, let's try the module mode
+if(NOT INIH_FOUND)
 
   # try the module mode
   find_package(INIH REQUIRED)
@@ -29,6 +21,7 @@ endif()
 #
 if (INIH_FOUND)
   if (INIH_INIREADER_FOUND)
+    message("INIReader component was found.")
     add_executable(INIReaderExample)
     target_sources(INIReaderExample
       PRIVATE
